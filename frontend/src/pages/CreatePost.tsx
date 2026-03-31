@@ -34,6 +34,17 @@ export function CreatePost() {
       return;
     }
 
+    // Validation des longueurs minimales (alignées avec le backend)
+    if (title.trim().length < 3) {
+      toast.error('Le titre doit contenir au moins 3 caractères');
+      return;
+    }
+
+    if (content.trim().length < 10) {
+      toast.error('Le contenu doit contenir au moins 10 caractères');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -74,9 +85,10 @@ export function CreatePost() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
-                  maxLength={200} // Limite de longueur du titre
+                  minLength={3}   // Minimum 3 caractères (validation backend)
+                  maxLength={255} // Maximum 255 caractères (validation backend)
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                  placeholder="Un titre accrocheur..."
+                  placeholder="Un titre accrocheur... (min. 3 caractères)"
                 />
               </div>
 
@@ -90,9 +102,10 @@ export function CreatePost() {
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   required
+                  minLength={10}   // Minimum 10 caractères (validation backend)
                   rows={12}        // Hauteur initiale de la zone de texte
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition"
-                  placeholder="Partagez vos idées..."
+                  placeholder="Partagez vos idées... (min. 10 caractères)"
                 />
               </div>
 

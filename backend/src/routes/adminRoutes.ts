@@ -19,13 +19,68 @@ const router = Router();
 
 // ─── Gestion des utilisateurs ───────────────────────────────────────────────
 
-// GET /api/admin/users → Liste tous les utilisateurs (avec pagination)
-// Accès : admin uniquement
+/**
+ * @swagger
+ * /admin/users:
+ *   get:
+ *     tags: [Admin]
+ *     summary: Liste tous les utilisateurs
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 50
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *           default: 0
+ *     responses:
+ *       200:
+ *         description: Liste des utilisateurs
+ *       401:
+ *         description: Non authentifié
+ *       403:
+ *         description: Accès admin requis
+ */
 router.get('/users', authenticate, isAdmin, getAllUsers);
 
-// POST /api/admin/users/:id/ban → Banne ou débanne un utilisateur
-// Body: { is_banned: boolean }
-// Accès : admin uniquement
+/**
+ * @swagger
+ * /admin/users/{id}/ban:
+ *   post:
+ *     tags: [Admin]
+ *     summary: Bannir/débannir un utilisateur
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - is_banned
+ *             properties:
+ *               is_banned:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Statut modifié
+ *       401:
+ *         description: Non authentifié
+ *       403:
+ *         description: Accès admin requis
+ */
 router.post('/users/:id/ban', authenticate, isAdmin, idParamValidation, banUser);
 
 // ─── Modération du contenu ──────────────────────────────────────────────────
@@ -44,8 +99,28 @@ router.delete('/comments/:id', authenticate, isAdmin, idParamValidation, deleteC
 // Accès : tout utilisateur authentifié (pas besoin d'être admin pour signaler)
 router.post('/reports', authenticate, reportValidation, createReport);
 
-// GET /api/admin/reports → Liste tous les signalements (filtrables par statut)
-// Accès : admin uniquement
+/**
+ * @swagger
+ * /admin/reports:
+ *   get:
+ *     tags: [Admin]
+ *     summary: Liste des signalements
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *           enum: [pending, reviewed, resolved]
+ *     responses:
+ *       200:
+ *         description: Liste des signalements
+ *       401:
+ *         description: Non authentifié
+ *       403:
+ *         description: Accès admin requis
+ */
 router.get('/reports', authenticate, isAdmin, getAllReports);
 
 // PUT /api/admin/reports/:id/status → Met à jour le statut d'un signalement

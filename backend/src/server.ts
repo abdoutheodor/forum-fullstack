@@ -4,6 +4,8 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger';
 // Middleware global de gestion des erreurs (appelé en dernier)
 import { errorHandler } from './middleware/errorHandler';
 // Import de tous les routeurs de l'application
@@ -34,6 +36,9 @@ app.use(express.json());
 
 // Middleware pour parser les corps de requêtes URL-encodées (formulaires HTML classiques)
 app.use(express.urlencoded({ extended: true }));
+
+// Documentation Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Route racine : renvoie les informations de base de l'API (utile pour vérifier que le serveur tourne)
 app.get('/', (_req, res) => {

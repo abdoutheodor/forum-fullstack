@@ -14,13 +14,57 @@ import { commentValidation, idParamValidation } from '../middleware/validation';
 
 const router = Router();
 
-// POST /api/posts/:postId/comments → Ajoute un commentaire sur un post
-// Body optionnel : { parent_comment_id } pour une réponse à un autre commentaire
-// Nécessite : token JWT + contenu valide
+/**
+ * @swagger
+ * /posts/{postId}/comments:
+ *   post:
+ *     tags: [Comments]
+ *     summary: Ajouter un commentaire
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: postId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - content
+ *             properties:
+ *               content:
+ *                 type: string
+ *               parent_comment_id:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Commentaire créé
+ *       401:
+ *         description: Non authentifié
+ */
 router.post('/posts/:postId/comments', authenticate, commentValidation, createComment);
 
-// GET /api/posts/:postId/comments → Liste tous les commentaires d'un post
-// Public : accessible sans authentification
+/**
+ * @swagger
+ * /posts/{postId}/comments:
+ *   get:
+ *     tags: [Comments]
+ *     summary: Liste des commentaires d'un post
+ *     parameters:
+ *       - in: path
+ *         name: postId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Liste des commentaires
+ */
 router.get('/posts/:postId/comments', getPostComments);
 
 // GET /api/comments/:commentId/replies → Récupère les réponses d'un commentaire

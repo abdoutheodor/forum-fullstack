@@ -15,12 +15,60 @@ import { postValidation, idParamValidation } from '../middleware/validation';
 
 const router = Router();
 
-// POST /api/posts → Crée un nouveau post
-// Nécessite : token JWT valide + titre/contenu valides
+/**
+ * @swagger
+ * /posts:
+ *   post:
+ *     tags: [Posts]
+ *     summary: Créer un nouveau post
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - content
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 minLength: 3
+ *                 maxLength: 255
+ *               content:
+ *                 type: string
+ *                 minLength: 10
+ *     responses:
+ *       201:
+ *         description: Post créé
+ *       401:
+ *         description: Non authentifié
+ */
 router.post('/', authenticate, postValidation, createPost);
 
-// GET /api/posts → Liste tous les posts (paginé via ?limit=&offset=)
-// Public : pas d'authentification requise
+/**
+ * @swagger
+ * /posts:
+ *   get:
+ *     tags: [Posts]
+ *     summary: Liste tous les posts
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 20
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *           default: 0
+ *     responses:
+ *       200:
+ *         description: Liste des posts
+ */
 router.get('/', getAllPosts);
 
 // GET /api/posts/:id → Récupère un post spécifique par son ID

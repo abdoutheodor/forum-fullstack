@@ -24,21 +24,76 @@ const messageValidation = [
   handleValidationErrors  // Collecte et retourne les erreurs si présentes
 ];
 
-// POST /api/messages → Envoie un message privé à un autre utilisateur
-// Body: { receiver_id: number, content: string }
+/**
+ * @swagger
+ * /messages:
+ *   post:
+ *     tags: [Messages]
+ *     summary: Envoyer un message privé
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - receiver_id
+ *               - content
+ *             properties:
+ *               receiver_id:
+ *                 type: integer
+ *               content:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Message envoyé
+ *       401:
+ *         description: Non authentifié
+ */
 router.post('/', authenticate, messageValidation, sendMessage);
 
-// GET /api/messages/conversations → Liste toutes les conversations de l'utilisateur
-// Retourne pour chaque conversation : l'interlocuteur et le dernier message
-// IMPORTANT : doit être avant /conversation/:userId pour éviter la collision de routes
+/**
+ * @swagger
+ * /messages/conversations:
+ *   get:
+ *     tags: [Messages]
+ *     summary: Liste de mes conversations
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Liste des conversations
+ *       401:
+ *         description: Non authentifié
+ */
 router.get('/conversations', authenticate, getUserConversations);
 
 // GET /api/messages/unread-count → Nombre de messages non lus
 // Utilisé pour le badge de notification
 router.get('/unread-count', authenticate, getUnreadCount);
 
-// GET /api/messages/conversation/:userId → Récupère les messages échangés avec un utilisateur
-// Marque automatiquement les messages de l'interlocuteur comme lus
+/**
+ * @swagger
+ * /messages/conversation/{userId}:
+ *   get:
+ *     tags: [Messages]
+ *     summary: Messages avec un utilisateur
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Messages de la conversation
+ *       401:
+ *         description: Non authentifié
+ */
 router.get('/conversation/:userId', authenticate, getConversation);
 
 // DELETE /api/messages/:id → Supprime un message spécifique (seul l'expéditeur peut supprimer)

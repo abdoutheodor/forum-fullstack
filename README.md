@@ -1,6 +1,6 @@
-# 📱 Application Forum - Documentation Complète
+# Application Forum - Documentation Complète
 
-## 📋 Table des matières
+## Table des matières
 1. [Vue d'ensemble](#vue-densemble)
 2. [Architecture](#architecture)
 3. [Technologies utilisées](#technologies-utilisées)
@@ -12,13 +12,13 @@
 
 ---
 
-## 🎯 Vue d'ensemble
+## Vue d'ensemble
 
 Application web de forum social avec système d'amis et messagerie privée. Les utilisateurs peuvent créer des posts, interagir avec d'autres utilisateurs, ajouter des amis et échanger des messages privés.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### Backend (Node.js + Express + TypeScript)
 ```
@@ -46,30 +46,30 @@ frontend/
 
 ---
 
-## 🛠️ Technologies utilisées
+## Technologies utilisées
 
 ### Backend
-- **Node.js** - Runtime JavaScript
-- **Express** - Framework web
-- **TypeScript** - Typage statique
-- **MySQL** (mysql2) - Base de données relationnelle
-- **JWT** (jsonwebtoken) - Authentification par token
-- **bcryptjs** - Hachage des mots de passe
-- **cors** - Gestion des requêtes cross-origin
+- Node.js - Runtime JavaScript
+- Express - Framework web
+- TypeScript - Typage statique
+- MySQL (mysql2) - Base de données relationnelle
+- JWT (jsonwebtoken) - Authentification par token
+- bcryptjs - Hachage des mots de passe
+- cors - Gestion des requêtes cross-origin
 
 ### Frontend
-- **React 18** - Bibliothèque UI
-- **TypeScript** - Typage statique
-- **React Router v6** - Gestion du routing
-- **Axios** - Client HTTP
-- **TailwindCSS** - Framework CSS utilitaire
-- **Lucide React** - Icônes
-- **React Hot Toast** - Notifications
-- **Vite** - Build tool et dev server
+- React 18 - Bibliothèque UI
+- TypeScript - Typage statique
+- React Router v6 - Gestion du routing
+- Axios - Client HTTP
+- TailwindCSS - Framework CSS utilitaire
+- Lucide React - Icônes
+- React Hot Toast - Notifications
+- Vite - Build tool et dev server
 
 ---
 
-## 📁 Structure du projet
+## Structure du projet
 
 ### Backend - Fichiers principaux
 
@@ -114,7 +114,7 @@ Service pour la messagerie privée :
 
 ---
 
-## 🗄️ Base de données
+## Base de données
 
 ### Tables principales
 
@@ -163,7 +163,7 @@ Service pour la messagerie privée :
 
 ---
 
-## 🔌 API Endpoints
+## API Endpoints
 
 ### Authentification (`/api/auth`)
 - `POST /register` - Inscription
@@ -199,7 +199,7 @@ Service pour la messagerie privée :
 
 ---
 
-## 🚀 Installation et démarrage
+## Installation et démarrage
 
 ### Prérequis
 - Node.js (v16+)
@@ -263,42 +263,42 @@ L'application sera accessible sur `http://localhost:3001`
 
 ---
 
-## ✨ Fonctionnalités
+## Fonctionnalités
 
-### 🔐 Authentification
+### Authentification
 - Inscription avec validation
 - Connexion sécurisée (JWT)
 - Gestion de session persistante
 - Déconnexion
 
-### 👥 Système d'amis
+### Système d'amis
 - **Recherche d'utilisateurs** par nom ou email
 - **Envoi de demandes d'ami**
 - **Acceptation/Rejet** des demandes
 - **Liste des amis** avec statut
 - **Suppression d'amis**
 
-### 💬 Messagerie privée
+### Messagerie privée
 - **Conversations** avec liste des amis
 - **Envoi de messages** en temps réel
 - **Bouton "Nouvelle conversation"** pour démarrer un chat
 - **Historique des messages**
 - Interface intuitive avec panneau gauche/droite
 
-### 📝 Posts et interactions
+### Posts et interactions
 - **Créer des posts** avec titre et contenu
 - **Liker** les posts
 - **Commenter** les posts
 - **Rechercher** des posts par mots-clés
 - **Modifier/Supprimer** ses propres posts
 
-### 👤 Profil utilisateur
+### Profil utilisateur
 - Modifier son profil (bio, avatar)
 - Voir le profil des autres utilisateurs
 
 ---
 
-## 🔒 Sécurité
+## Sécurité
 
 - **Mots de passe hachés** avec bcrypt
 - **Tokens JWT** pour l'authentification
@@ -309,7 +309,7 @@ L'application sera accessible sur `http://localhost:3001`
 
 ---
 
-## 🎨 Interface utilisateur
+## Interface utilisateur
 
 - Design moderne avec **TailwindCSS**
 - Interface responsive (mobile-friendly)
@@ -319,7 +319,7 @@ L'application sera accessible sur `http://localhost:3001`
 
 ---
 
-## 📊 Flux de données
+## Flux de données
 
 ### Authentification
 ```
@@ -362,7 +362,7 @@ L'application sera accessible sur `http://localhost:3001`
 
 ---
 
-## 🐛 Résolution de problèmes
+## Résolution de problèmes
 
 ### MySQL ne démarre pas
 - Vérifier que le port 3306 n'est pas utilisé
@@ -391,7 +391,7 @@ kill -9 <PID>
 
 ---
 
-## 📈 Améliorations futures possibles
+## Améliorations futures possibles
 
 1. **WebSockets** pour les messages en temps réel
 2. **Upload d'images** dans les posts et messages
@@ -406,7 +406,7 @@ kill -9 <PID>
 
 ---
 
-## 👨‍💻 Développé par
+## Développé par
 
 Projet de forum social avec système d'amis et messagerie privée.
 
@@ -414,6 +414,4 @@ Projet de forum social avec système d'amis et messagerie privée.
 
 ---
 
-## 📝 Licence
 
-Ce projet est à usage éducatif.

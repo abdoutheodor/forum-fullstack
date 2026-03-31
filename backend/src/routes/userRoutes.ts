@@ -7,14 +7,48 @@ import { searchUsers, getUserById } from '../controllers/userController';
 
 const router = Router();
 
-// GET /api/users/search?query=motcle → Recherche des utilisateurs par username ou email
-// Exclut l'utilisateur courant des résultats
-// Nécessite : token JWT (pour identifier qui cherche et s'exclure)
-// IMPORTANT : cette route doit être déclarée AVANT /:id pour ne pas être capturée par elle
+/**
+ * @swagger
+ * /users/search:
+ *   get:
+ *     tags: [Users]
+ *     summary: Rechercher des utilisateurs
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: query
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Résultats de recherche
+ *       401:
+ *         description: Non authentifié
+ */
 router.get('/search', authenticate, searchUsers);
 
-// GET /api/users/:id → Récupère le profil public d'un utilisateur
-// Nécessite : token JWT (les profils ne sont visibles que par les membres connectés)
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     tags: [Users]
+ *     summary: Profil public d'un utilisateur
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Profil utilisateur
+ *       401:
+ *         description: Non authentifié
+ */
 router.get('/:id', authenticate, getUserById);
 
 export default router;
