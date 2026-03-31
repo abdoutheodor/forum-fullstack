@@ -1,0 +1,275 @@
+### Forum API - Fichier de test REST Client (VS Code Extension)
+### Installez l'extension "REST Client" dans VS Code pour utiliser ce fichier
+
+@baseUrl = http://localhost:5000
+@token = 
+
+### 1. Test de connexion au serveur
+GET {{baseUrl}}/
+
+###
+
+### 2. Inscription d'un utilisateur
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+###
+
+### 3. Inscription d'un deuxième utilisateur
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "jane_smith",
+  "email": "jane@example.com",
+  "password": "password123"
+}
+
+###
+
+### 4. Connexion
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+###
+
+### 5. Récupérer le profil (remplacez @token par votre token)
+GET {{baseUrl}}/api/auth/profile
+Authorization: Bearer {{token}}
+
+###
+
+### 6. Mettre à jour le profil
+PUT {{baseUrl}}/api/auth/profile
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "avatar": "https://i.pravatar.cc/150?img=1",
+  "bio": "Développeur passionné par Node.js et TypeScript"
+}
+
+###
+
+### 7. Créer un post
+POST {{baseUrl}}/api/posts
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Introduction à Node.js",
+  "content": "Node.js est un environnement d'exécution JavaScript côté serveur. Il permet de créer des applications web performantes et scalables."
+}
+
+###
+
+### 8. Créer un deuxième post
+POST {{baseUrl}}/api/posts
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "TypeScript vs JavaScript",
+  "content": "TypeScript ajoute le typage statique à JavaScript, ce qui permet de détecter les erreurs plus tôt dans le développement."
+}
+
+###
+
+### 9. Récupérer tous les posts
+GET {{baseUrl}}/api/posts
+
+###
+
+### 10. Récupérer tous les posts avec pagination
+GET {{baseUrl}}/api/posts?limit=10&offset=0
+
+###
+
+### 11. Récupérer un post par ID
+GET {{baseUrl}}/api/posts/1
+
+###
+
+### 12. Récupérer les posts d'un utilisateur
+GET {{baseUrl}}/api/posts/user/1
+
+###
+
+### 13. Modifier un post
+PUT {{baseUrl}}/api/posts/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Introduction à Node.js - Mise à jour",
+  "content": "Node.js est un environnement d'exécution JavaScript côté serveur très performant. Il utilise le moteur V8 de Chrome."
+}
+
+###
+
+### 14. Ajouter un commentaire à un post
+POST {{baseUrl}}/api/posts/1/comments
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "content": "Excellent article ! Merci pour le partage.",
+  "parent_comment_id": null
+}
+
+###
+
+### 15. Ajouter une réponse à un commentaire
+POST {{baseUrl}}/api/posts/1/comments
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "content": "Je suis d'accord avec toi !",
+  "parent_comment_id": 1
+}
+
+###
+
+### 16. Récupérer les commentaires d'un post
+GET {{baseUrl}}/api/posts/1/comments
+
+###
+
+### 17. Récupérer les réponses d'un commentaire
+GET {{baseUrl}}/api/comments/1/replies
+
+###
+
+### 18. Liker un post
+POST {{baseUrl}}/api/posts/1/like
+Authorization: Bearer {{token}}
+
+###
+
+### 19. Récupérer les likes d'un post
+GET {{baseUrl}}/api/posts/1/likes
+Authorization: Bearer {{token}}
+
+###
+
+### 20. Unliker un post (même requête que liker)
+POST {{baseUrl}}/api/posts/1/like
+Authorization: Bearer {{token}}
+
+###
+
+### 21. Rechercher des posts par mot-clé
+GET {{baseUrl}}/api/search?q=Node.js
+
+###
+
+### 22. Rechercher des posts par auteur
+GET {{baseUrl}}/api/search?author=john
+
+###
+
+### 23. Rechercher des posts par date
+GET {{baseUrl}}/api/search?date=2024-03-06
+
+###
+
+### 24. Supprimer un commentaire
+DELETE {{baseUrl}}/api/comments/1
+Authorization: Bearer {{token}}
+
+###
+
+### 25. Supprimer un post
+DELETE {{baseUrl}}/api/posts/1
+Authorization: Bearer {{token}}
+
+###
+
+### ========== ROUTES ADMIN (nécessite is_admin = true) ==========
+
+### 26. Récupérer tous les utilisateurs (ADMIN)
+GET {{baseUrl}}/api/admin/users
+Authorization: Bearer {{token}}
+
+###
+
+### 27. Bannir un utilisateur (ADMIN)
+POST {{baseUrl}}/api/admin/users/2/ban
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "is_banned": true
+}
+
+###
+
+### 28. Débannir un utilisateur (ADMIN)
+POST {{baseUrl}}/api/admin/users/2/ban
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "is_banned": false
+}
+
+###
+
+### 29. Supprimer un post (ADMIN)
+DELETE {{baseUrl}}/api/admin/posts/1
+Authorization: Bearer {{token}}
+
+###
+
+### 30. Supprimer un commentaire (ADMIN)
+DELETE {{baseUrl}}/api/admin/comments/1
+Authorization: Bearer {{token}}
+
+###
+
+### 31. Créer un signalement
+POST {{baseUrl}}/api/admin/reports
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "reported_user_id": 2,
+  "reason": "Contenu inapproprié et spam répété"
+}
+
+###
+
+### 32. Récupérer tous les signalements (ADMIN)
+GET {{baseUrl}}/api/admin/reports
+Authorization: Bearer {{token}}
+
+###
+
+### 33. Récupérer les signalements en attente (ADMIN)
+GET {{baseUrl}}/api/admin/reports?status=pending
+Authorization: Bearer {{token}}
+
+###
+
+### 34. Mettre à jour le statut d'un signalement (ADMIN)
+PUT {{baseUrl}}/api/admin/reports/1/status
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "status": "reviewed"
+}
+
+###
